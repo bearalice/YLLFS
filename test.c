@@ -4,13 +4,14 @@
 
 int main()
 {
-    create_fs();
-    sync_fs();
+    // create_fs();
+    // sync_fs();
 
-    // mount_fs();
-    allocate_file("hello");
+    mount_fs();
+    int file_num = allocate_file("another");
 
     // test set file size
+    /*
     set_file_size(0, 1000);
     print_fs();
 
@@ -19,6 +20,19 @@ int main()
 
     set_file_size(0, 100);
     print_fs();
+    */
+
+    // test write file
+    set_file_size(file_num, 5000);
+
+    char data = 'b';
+
+    int i;
+    for (i = 0; i < 10; i++)
+    {
+        write_data_to_file(file_num, i * 100, &data);
+    }
+
     sync_fs();
 
     // after sync, the file system is written to disk,

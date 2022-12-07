@@ -2,27 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-/*
-struct superblock
-{
-    int num_inodes;
-    int num_blocks;
-    int size_blocks;
-};
-
-struct inode
-{
-    int size;
-    char name[8];
-    int blocks[10];
-};
-
-struct disk_block
-{
-    int next_block_num;
-    char data[512];
-};
-*/
 
 struct superblock sb;
 
@@ -225,7 +204,32 @@ void set_file_size(int file_num, int size)
     shorten_file(begin_block_num);
     dbs[begin_block_num].next_block_num = -2;
 };
-void write_data_to_file(int file_num, int pos, char *data); // write data to a file
+
+int get_block_num(int file_num, int offset)
+{
+    int togo = offset;
+    int block_num = inodes[file_num].first_block_num;
+    while (togo > 0)
+    {
+        block_num = dbs[block_num].next_block_num;
+        togo--;
+    }
+    return block_num;
+};
+
+void write_data_to_file(int file_num, int pos, char *data)
+{
+    // calculate the block and find the block number
+    int relative_block_num = pos / BLOCK_SIZE;
+
+    int block_num = get_block_num(file_num, relative_block_num);
+    // calculate the offset in the block
+
+    int offset = pos % BLOCK_SIZE;
+    // write the data to the block
+    //  memcpy(dbs[block_num].data + offset, data, strlen(data));
+    dbs[block_num].data[offset] = *data;
+}; // write data to a file
 
 /*notes:
 understand

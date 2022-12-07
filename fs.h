@@ -32,3 +32,5 @@ void set_file_size(int file_num, int size);                 // set the size of a
 void write_data_to_file(int file_num, int pos, char *data); // write data to a file
 
 void print_fs(); // print the file system
+
+// we did not do delete files or delete blocks
