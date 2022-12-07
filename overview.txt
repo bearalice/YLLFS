@@ -1,0 +1,14 @@
+fs structure
+
+superblock
+    read
+    write
+inode
+    read
+    write
+block
+    read
+    write
+file
+    read
+    write
